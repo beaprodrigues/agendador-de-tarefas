@@ -1,0 +1,89 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres-usuario
+    environment:
+      POSTGRES_DB: db_usuario
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - agendador-net
+
+  mongodb:
+    image: mongo:7
+    container_name: mongo-agendador
+    ports:
+      - "27017:27017"
+    networks:
+      - agendador-net
+
+  usuario:
+    build: ./usuario
+    container_name: ms-usuario
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/db_usuario
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - postgres
+    networks:
+      - agendador-net
+
+  agendador-tarefas:
+    build: ./agendador-tarefas
+    container_name: ms-agendador-tarefas
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/db_agendador
+      USUARIO_URL: http://usuario:8080
+    depends_on:
+      - mongodb
+      - usuario
+    networks:
+      - agendador-net
+
+  notificacao:
+    build: ./notificacao
+    container_name: ms-notificacao
+    ports:
+      - "8082:8082"
+    environment:
+      EMAIL_USERNAME: ${EMAIL_USERNAME:-seu_email@gmail.com}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD:-sua_senha_app}
+    networks:
+      - agendador-net
+
+  bff-agendador-tarefas:
+    build: ./bff-agendador-tarefas
+    container_name: ms-bff-agendador
+    ports:
+      - "8083:8083"
+    environment:
+      USUARIO_URL: http://usuario:8080
+      AGENDADOR_TAREFAS_URL: http://agendador-tarefas:8081
+      NOTIFICACAO_URL: http://notificacao:8082
+    depends_on:
+      - usuario
+      - agendador-tarefas
+      - notificacao
+    networks:
+      - agendador-net
+
+  frontend-agendador-angular:
+    build: ./frontend-agendador-angular
+    container_name: frontend-agendador
+    ports:
+      - "4200:80"
+    depends_on:
+      - bff-agendador-tarefas
+    networks:
+      - agendador-net
+
+networks:
+  agendador-net:
+    driver: bridge

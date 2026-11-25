@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Notificação de Tarefa</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; }
+        .card { background: #fff; border-radius: 8px; padding: 24px; max-width: 500px; margin: 0 auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h2 { color: #4f46e5; }
+        .highlight { font-weight: bold; color: #1f2937; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>⏰ Lembrete de Tarefa Agendada!</h2>
+    <p>Olá! Sua tarefa <span class="highlight" th:text="${nomeTarefa}">Nome da Tarefa</span> está agendada para <span class="highlight" th:text="${dataEvento}">01-01-2026 12:00:00</span>.</p>
+    <p><strong>Descrição:</strong></p>
+    <p th:text="${descricao}">Descrição detalhada da tarefa.</p>
+    <hr>
+    <small>Enviado automaticamente pelo Sistema Agendador de Tarefas.</small>
+</div>
+</body>
+</html>

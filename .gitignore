@@ -1,0 +1,21 @@
+# Java / Gradle
+.gradle/
+build/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Env / SO
+.env
+.DS_Store
+Thumbs.db
