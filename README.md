@@ -36,7 +36,7 @@ flowchart LR
 Todos os serviços possuem `Dockerfile` multi-stage. Não é necessário ter Java, Gradle ou Node.js instalados localmente para subir o ambiente via container.
 
 ```bash
-git clone https://github.com/SEU_USUARIO/agendador-de-tarefas.git
+git clone https://github.com/beaprodrigues/agendador-de-tarefas.git
 cd agendador-de-tarefas
 docker compose up -d --build
 ```
