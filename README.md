@@ -2,7 +2,8 @@
 
 Sistema distribuído para agendamento de tarefas e envio automático de lembretes por e-mail. O projeto utiliza uma arquitetura de microsserviços em Java 17 com Spring Boot 3, persistência em PostgreSQL e MongoDB, um camada BFF (Backend for Frontend) e interface web em Angular 19.
 
-![Interface do Agendador de Tarefas](docs/images/kanban.png)
+![Interface do Agendador de Tarefas](https://github.com/user-attachments/assets/743e34b7-43df-43df-b662-896fe7600877)
+
 
 ## Arquitetura
 
